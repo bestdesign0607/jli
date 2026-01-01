@@ -1,0 +1,26 @@
+# Django environment
+.env
+venv/
+__pycache__/
+*.pyc
+
+# Django media files
+media/
+*.mp4
+
+# Django migrations (optional)
+*/migrations/*.py
+*/migrations/*.pyc
+!*/migrations/__init__.py
+
+# React build and dependencies (for dashboard and jlif)
+node_modules/
+build/
+dist/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
