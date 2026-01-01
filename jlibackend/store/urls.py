@@ -42,7 +42,7 @@
 
 
 from django.urls import path
-from .views import SignupAPIView, LoginAPIView, UploadVariantImageAPIView, UserOrdersAPIView, UserProfileAPIView
+from .views import ConfirmDigitalOrderAPIView, CreateDigitalOrderAPIView, DigitalOrderListAPIView, ProductReviewListCreateView, SignupAPIView, LoginAPIView, UploadPaymentProofAPIView, UploadVariantImageAPIView, UserOrderListView, UserOrdersAPIView, UserProfileAPIView, UserReviewListView, update_order_status
 from .views import (
     GoogleAuthAPIView,
     ProductListAPIView,
@@ -88,10 +88,14 @@ urlpatterns = [
     # Detail views
     path('products/<int:id>/', ProductDetailAPIView.as_view(), name='api-product-detail-id'),
     path("products/upload-demo-video/", ProductDemoVideoUploadAPIView.as_view(), name="upload-demo-video"),
-    path('products/<int:id>/reviews/', views.product_reviews, name='product-reviews'),
+    # path('products/<int:id>/reviews/', views.product_reviews, name='product-reviews'),
     path('products/<slug:slug>/', ProductDetailBySlugAPIView.as_view(), name='api-product-detail-slug'),
 
+    path("products/<int:id>/reviews/", ProductReviewListCreateView.as_view()),
+    path("user/reviews/", UserReviewListView.as_view()),
+
     path("orders/my-orders/", UserOrdersAPIView.as_view(), name="user-orders"),
+    path("orders/update-status/<str:order_type>/<int:order_id>/", update_order_status, name="update_order_status"),
 
     # OTP
     path('email/send-otp/', send_otp, name='send-otp'),
@@ -106,9 +110,13 @@ urlpatterns = [
     path('payments/confirm/', ConfirmPaymentAPIView.as_view(), name='api-confirm-payment'),
     path("auth/profile/", UserProfileAPIView.as_view(), name="user-profile"),
     path("orders/<int:pk>/", OrderDetailAPIView.as_view()),
-    
+    path("orders/user/", UserOrderListView.as_view()),
+    path("digital-orders/create/", CreateDigitalOrderAPIView.as_view()),
+    path("admin/digital-orders/<int:order_id>/confirm/", ConfirmDigitalOrderAPIView.as_view()),
+    path("digital-orders/<int:order_id>/upload-proof/", UploadPaymentProofAPIView.as_view(), name="upload-payment-proof"),
+    path("admin/digital-orders/", DigitalOrderListAPIView.as_view(), name="admin-digital-orders"),
 ]
-
+    
 
 
 

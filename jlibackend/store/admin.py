@@ -47,8 +47,14 @@
 
 
 from django.contrib import admin
+from django.utils.html import format_html
+from django.utils.html import format_html, format_html_join
+
+
 from .models import (
     Category,
+    DigitalOrder,
+    
     EmailOTP,
     Product,
     ProductImage,
@@ -79,6 +85,73 @@ class OrderAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ("name", "slug")
+
+
+
+
+@admin.register(DigitalOrder)
+class DigitalOrderAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "product",
+        "full_name",
+        "email",
+        "phone",
+        "username",
+        "status",
+        "created_at",
+        "confirmed_at",
+    ]
+
+    readonly_fields = ["display_files", "created_at", "confirmed_at"]
+
+    # Dynamically include all text fields in fieldsets
+    def get_fieldsets(self, request, obj=None):
+        text_fields = []
+        file_fields = ["id_card", "signature_director", "signature_witness", "nin", "payment_proof"]
+
+        # Automatically collect all fields that are not file fields or system fields
+        for field in self.model._meta.get_fields():
+            if field.name not in file_fields + ["id", "product", "status", "created_at", "confirmed_at"]:
+                text_fields.append(field.name)
+
+        return (
+            (None, {
+                "fields": ("product", "status", *text_fields, "display_files", "created_at", "confirmed_at")
+            }),
+        )
+
+    def display_files(self, obj):
+        """Show file fields as clickable links or image previews."""
+        file_fields = [
+            ("id_card", "ID Card"),
+            ("signature_director", "Director Signature"),
+            ("signature_witness", "Witness Signature"),
+            ("nin", "NIN"),
+            ("payment_proof", "Payment Proof"),
+        ]
+
+        files = []
+        for field_name, label in file_fields:
+            file_obj = getattr(obj, field_name, None)
+            if file_obj:
+                if hasattr(file_obj, "url") and str(file_obj.url).lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".webp")):
+                    files.append((
+                        file_obj.url,
+                        format_html(
+                            '{}<br><img src="{}" style="max-height:120px;max-width:200px;border:1px solid #ccc;margin-top:5px;" />',
+                            label,
+                            file_obj.url
+                        )
+                    ))
+                else:
+                    files.append((file_obj.url, format_html('<a href="{}" target="_blank">{}</a>', file_obj.url, label)))
+
+        if not files:
+            return "-"
+        return format_html_join("<br>", "{}", ((f[1],) for f in files))
+
+    display_files.short_description = "Uploaded Files"
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):

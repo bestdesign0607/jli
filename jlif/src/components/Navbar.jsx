@@ -12,24 +12,24 @@ export default function Navbar() {
       {/* Logo */}
       <Link to='/'>
       <div className="w-12 rounded-full">
-        <img src="logo.png" className="rounded-3xl" alt="this is recabite logo" />
+        <img src="/logo.png" className="rounded-3xl" alt="this is recabite logo" />
       </div>
       </Link>
 
       {/* Desktop Links */}
       <div className="hidden md:flex space-x-8 text-sm font-medium">
-        <Link to="/services" className="hover:text-[#FF0000] transition-colors">Services</Link>
+        {/* <Link to="/services" className="hover:text-[#FF0000] transition-colors">Services</Link>
         <Link to="/solutions" className="hover:text-[#FF0000] transition-colors">Solutions</Link>
         <Link to="/about" className="hover:text-[#FF0000] transition-colors">About us</Link>
-        <Link to="/contact" className="hover:text-[#FF0000] transition-colors">Contact</Link>
+        <Link to="/contact" className="hover:text-[#FF0000] transition-colors">Contact</Link> */}
         <div
           className="relative"
           onMouseEnter={() => setIsOpen(true)}
           onMouseLeave={() => setIsOpen(false)}
         >
-          <button className="flex items-center hover:text-[#FF0000] transition-colors">
+          {/* <button className="flex items-center hover:text-[#FF0000] transition-colors">
             Resources <FaChevronDown size={14} className="ml-1" />
-          </button>
+          </button> */}
           <AnimatePresence>
             {isOpen && (
               <motion.div
@@ -75,18 +75,18 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="absolute top-full left-0 w-full bg-[#003366] text-white flex flex-col items-start px-6 py-6 space-y-4 md:hidden shadow-md z-50"
           >
-            <Link to="/services" className="hover:text-[#FF0000] transition-colors">Services</Link>
+            {/* <Link to="/services" className="hover:text-[#FF0000] transition-colors">Services</Link>
             <Link to="/solutions" className="hover:text-[#FF0000] transition-colors">Solutions</Link>
             <Link to="/about" className="hover:text-[#FF0000] transition-colors">About us</Link>
-            <Link to="/contact" className="hover:text-[#FF0000] transition-colors">Contact</Link>
+            <Link to="/contact" className="hover:text-[#FF0000] transition-colors">Contact</Link> */}
 
             {/* Resources Dropdown in Mobile */}
-            <button
+            {/* <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center hover:text-[#FF0000] transition-colors"
             >
               Resources <FaChevronDown size={14} className="ml-1" />
-            </button>
+            </button> */}
             <AnimatePresence>
               {isOpen && (
                 <motion.div

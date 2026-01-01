@@ -32,7 +32,7 @@ export default function Hero() {
         </p>
 
         {/* Buttons */}
-        <motion.div
+        {/* <motion.div
           className="mt-8 flex justify-center space-x-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export default function Hero() {
           >
             Learn more
           </a>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </section>
   );

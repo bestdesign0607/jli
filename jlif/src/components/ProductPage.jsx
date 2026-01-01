@@ -277,7 +277,7 @@
 //       <div className="container mx-auto p-6 space-y-10">
 //         {/* Product Section */}
 //         <div className="flex flex-col lg:flex-row gap-6 bg-white rounded-lg shadow p-6">
-          
+
 //           {/* Left: vertical thumbnails and main image */}
 //           <div className="lg:w-1/2 flex gap-4">
 //             <div className="flex flex-col gap-2">
@@ -490,7 +490,7 @@
 //       <div className="container mx-auto p-6 space-y-10">
 //         {/* Product Section */}
 //         <div className="flex flex-col lg:flex-row gap-6 bg-white rounded-lg shadow p-6">
-          
+
 //           {/* Left: Thumbnails + Main Image */}
 //           <div className="lg:w-1/2 flex gap-4">
 //             <div className="hidden lg:flex flex-col gap-2">
@@ -6011,8 +6011,8 @@ import { useCart } from "../context/CartContext";
 import { StoreLayout } from "../layouts/StoreLayout";
 
 export const ProductPage = () => {
-  const { id, slug } = useParams();
-  const productIdentifier = id || slug;
+  const { id } = useParams();
+  const productIdentifier = id;
 
   const navigate = useNavigate();
   const { addToCart, cartItems } = useCart();
@@ -6034,7 +6034,7 @@ export const ProductPage = () => {
 
   // --- FETCH PRODUCT, REVIEWS, CATEGORIES ---
   useEffect(() => {
-    if (!productIdentifier) return;
+    if (!productIdentifier || productIdentifier === "undefined") return;
 
     axios.get(`${BASE_URL}/products/${productIdentifier}/`)
       .then((res) => {
@@ -6103,7 +6103,7 @@ export const ProductPage = () => {
     if (!selectedVariant?.old_price) return 0;
     return Math.round(
       ((selectedVariant.old_price - selectedVariant.price) / selectedVariant.old_price) *
-        100
+      100
     );
   }, [selectedVariant]);
 
@@ -6166,6 +6166,8 @@ export const ProductPage = () => {
   };
 
   const handleViewProduct = (productId) => navigate(`/product/${productId}`);
+  const isDigital = String(product?.product_type ?? "").toLowerCase() === "digital";
+
 
   if (!product) return <div className="text-center py-20 text-xl">Loading product...</div>;
 
@@ -6304,38 +6306,69 @@ export const ProductPage = () => {
             )}
 
             {/* QUANTITY */}
-            <div className="flex items-center gap-4 mt-3">
+            {/* <div className="flex items-center gap-4 mt-3">
               <button onClick={() => setQty(q => Math.max(1, q - 1))} className="border px-4 py-1 rounded text-lg">-</button>
               <span className="text-xl">{qty}</span>
               <button onClick={() => setQty(q => q + 1)} className="border px-4 py-1 rounded text-lg">+</button>
               {thisProductQty > 0 && <span className="text-gray-700 font-semibold">In cart: {thisProductQty}</span>}
-            </div>
+            </div> */}
+            {!isDigital && (
+              <div className="flex items-center gap-4 mt-3">
+                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="border px-4 py-1 rounded text-lg">-</button>
+                <span className="text-xl">{qty}</span>
+                <button onClick={() => setQty(q => q + 1)} className="border px-4 py-1 rounded text-lg">+</button>
+                {thisProductQty > 0 && (
+                  <span className="text-gray-700 font-semibold">
+                    In cart: {thisProductQty}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* ADD TO CART */}
-            <button
+            {/* <button
               onClick={handleAddToCart}
               className="w-full bg-orange-500 text-white text-xl py-4 rounded-full font-semibold mt-4"
             >
               Add to Cart
-            </button>
+            </button> */}
+            {isDigital ? (
+              <button
+                onClick={() => navigate(`/digital-checkout/${product.id}`)}
+                className="w-full bg-green-600 text-white text-xl py-4 rounded-full font-semibold mt-4"
+              >
+                Buy Now
+              </button>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-orange-500 text-white text-xl py-4 rounded-full font-semibold mt-4"
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         </div>
 
         {/* REVIEWS */}
         <div className="mt-12 bg-white p-6 rounded-xl shadow">
           <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
+
           {reviews.length === 0 ? (
             <p>No reviews yet</p>
           ) : (
-            reviews.map(r => (
+            reviews.map((r) => (
               <div key={r.id} className="border-b py-3">
-                <div className="font-bold">{r.user_name}</div>
-                <div className="flex gap-1">{renderStars(r.rating)}</div>
-                <p className="text-gray-700">{r.text}</p>
+                <div className="font-bold">{r.user_name || "Anonymous"}</div>
+                <div className="flex gap-1">{renderStars(Number(r.rating) || 0)}</div>
+                <p className="text-gray-700">{r.text || ""}</p>
+                {r.product_title && <p className="text-sm text-gray-500">{r.product_title}</p>}
+                {r.date && <p className="text-xs text-gray-400">{new Date(r.date).toLocaleString()}</p>}
               </div>
             ))
           )}
         </div>
+
 
         {/* DEMO VIDEO */}
         {product.demo_video && (

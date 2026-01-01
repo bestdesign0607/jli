@@ -15,9 +15,12 @@ export default function Sidebar() {
         <Link to="/dashboard/add-product" style={{ color: "white" }}>AddProduct</Link>
         <Link to="/dashboard/products" style={{ color: "white" }}>Product</Link>
         <Link to="/dashboard/orders" style={{ color: "white" }}>Orders</Link>
-        <Link to="/dashboard/network/wallet" style={{ color: "white" }}>Wallet</Link>
+        <Link to="/dashboard/digital-orders" style={{ color: "white" }}>Digital Orders</Link>
+        
+
+        {/* <Link to="/dashboard/network/wallet" style={{ color: "white" }}>Wallet</Link>
         <Link to="/dashboard/network/withdrawals" style={{ color: "white" }}>Withdrawals</Link>
-        <Link to="/dashboard/network/downline" style={{ color: "white" }}>Downline Tree</Link>
+        <Link to="/dashboard/network/downline" style={{ color: "white" }}>Downline Tree</Link> */}
 
       </nav>
     </div>

@@ -10,11 +10,15 @@ export default function CallToAction() {
           business goals
         </p>
 
-        <div className="flex justify-center gap-4">
-          <button className="bg-[#FF0000] text-white font-semibold py-2 px-6 rounded-md hover:bg-[#003366] hover:text-[#ffffff] transition-all">
-            Contact us
-          </button>
-          
+        <div className="mt-12 text-center">
+          <a
+            href="https://wa.me/2347026023535?text=Hello%20Recabite%20Hub,%20I%20need%20support"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-[#25D366] text-white font-semibold rounded-lg hover:bg-[#1ebe57] transition-colors"
+          >
+            Contact Us on WhatsApp
+          </a>
         </div>
       </div>
     </section>

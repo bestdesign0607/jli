@@ -205,14 +205,20 @@ import AccountPage from "./pages/AccountPage";
 import AmbassadorSignupPage from "./pages/AmbassadorSignupPage"; // ⭐ New
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import AmbassadorDashboardPage from "./pages/AmbassadorDashboardPage";
+import DigitalCheckout from "./pages/DigitalCheckout";
+import DigitalPostPayment from "./pages/DigitalPostPayment";
+import Solutions from "./pages/Solutions";
+import SolutionDetail from "./pages/SolutionDetail";
+
 
 function App() {
   return (
     <CartProvider>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/solutions/:id" element={<SolutionDetail />} />
         <Route path="/store" element={<StorePage />} />
-
+        <Route path="/digital-checkout/:id" element={<DigitalCheckout />} />
         {/* Protected routes */}
         <Route
           path="/account"
@@ -230,6 +236,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/digital-post-payment/:id"  element={<DigitalPostPayment />}
+/>
 
         {/* Auth routes */}
         <Route path="/signup" element={<AuthPage />} />

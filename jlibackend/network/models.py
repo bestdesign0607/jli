@@ -24,6 +24,7 @@ class AmbassadorProfile(models.Model):
     level = models.PositiveSmallIntegerField(default=0)  # 0..10
     created_at = models.DateTimeField(auto_now_add=True)
     device_fingerprint = models.CharField(max_length=255, null=True, blank=True)  # for fraud checks
+    completed_groups = models.PositiveIntegerField(default=0)
 
     class Meta:
         indexes = [
@@ -81,6 +82,7 @@ class Purchase(models.Model):
     distribution_processed = models.BooleanField(default=False)
     device_fingerprint = models.CharField(max_length=255, null=True, blank=True)
     is_qualifying = models.BooleanField(default=False)  # ✅ NEW FIELD
+    ambassador_eligible = models.BooleanField(default=False)  # 🔥 ADD THIS
 
     def __str__(self):
         return f"Purchase(ref={self.payment_reference} user={self.user_id} profit={self.profit})"

@@ -68,6 +68,10 @@ import uuid
 from collections import deque
 from .models import AmbassadorProfile
 
+
+MAX_LEVEL = 10
+MATRIX_WIDTH = 3
+
 def generate_referral_code(length=8):
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for _ in range(length))
@@ -80,38 +84,42 @@ def make_unique_referral_code():
     return uuid.uuid4().hex[:12].upper()
 
 
-def find_strict_matrix_parent(referrer_profile):
+def find_strict_matrix_parent(referrer_profile=None):
     """
-    STRICT MATRIX PLACEMENT ALGORITHM:
-    - If referrer has <3 children → place under referrer
-    - If referrer has 3 children → do not place under referrer or subtree
-    - Only allow placement when current level is fully complete
-    - Descend to next level only if current level fully filled
+    Find a parent for the new ambassador according to strict matrix rules:
+    - Max 3 children per upline
+    - Use BFS starting from referrer if provided
+    - Fallback to level 0 roots if no referrer or referrer subtree full
     """
-    if not referrer_profile:
-        return None  # fallback: company level (root)
+    # 1️⃣ Prefer referrer
+    if referrer_profile:
+        if referrer_profile.children.count() < MATRIX_WIDTH:
+            return referrer_profile
 
-    # 1️⃣ If referrer has < 3 children → place directly under referrer
-    if referrer_profile.children.count() < 3:
-        return referrer_profile
+        # BFS through referrer's subtree
+        queue = deque(referrer_profile.children.all().order_by('created_at'))
+        while queue:
+            node = queue.popleft()
+            if node.children.count() < MATRIX_WIDTH:
+                return node
+            queue.extend(node.children.all().order_by('created_at'))
 
-    # 2️⃣ Check if current level is full
-    current_level = referrer_profile.level
-    same_level_nodes = AmbassadorProfile.objects.filter(level=current_level).order_by('created_at')
-    
-    # If any node has <3 children → block placement
-    for node in same_level_nodes:
-        if node.children.count() < 3:
-            return None  # Placement blocked until level is complete
+    # 2️⃣ Fallback: BFS from level 0 roots
+    roots = AmbassadorProfile.objects.filter(parent__isnull=True).order_by('created_at')
+    if not roots.exists():
+        return None  # first ambassador ever
 
-    # 3️⃣ Level complete → move to next level
-    next_level_nodes = AmbassadorProfile.objects.filter(level=current_level + 1).order_by('created_at')
-    for node in next_level_nodes:
-        if node.children.count() < 3:
+    queue = deque(roots)
+    while queue:
+        node = queue.popleft()
+        if node.children.count() < MATRIX_WIDTH:
             return node
+        queue.extend(node.children.all().order_by('created_at'))
 
-    # If next level empty or all full → fallback to None (company root)
-    return None
+    # 3️⃣ If all full, just return first root as last resort
+    return roots.first()
+
+
 
 
 def is_same_device(referrer_profile, buyer_device_fingerprint):
