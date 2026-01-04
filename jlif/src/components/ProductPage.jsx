@@ -6030,7 +6030,7 @@ export const ProductPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const BASE_URL = "http://127.0.0.1:8000/store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
 
   // --- FETCH PRODUCT, REVIEWS, CATEGORIES ---
   useEffect(() => {
