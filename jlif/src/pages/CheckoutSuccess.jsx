@@ -1498,8 +1498,8 @@ import axios from "axios";
 import { StoreHeader } from "../components/StoreHeader";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const BASE_URL = "http://127.0.0.1:8000/store";
-const NETWORK_URL = "http://127.0.0.1:8000/network";
+const BASE_URL = "https://recabitesnetwork.com/store";
+const NETWORK_URL = "https://recabitesnetwork.com/network";
 
 const fetchOrderWithRefresh = async (orderId) => {
   let token = localStorage.getItem("access_token");
