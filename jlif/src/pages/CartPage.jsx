@@ -1568,7 +1568,7 @@ export const CartPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null); // for highlighting
 
-  const BASE_URL = "http://127.0.0.1:8000/store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
 
   // Fetch categories and all products
   useEffect(() => {
