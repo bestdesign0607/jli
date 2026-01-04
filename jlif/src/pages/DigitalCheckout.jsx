@@ -268,7 +268,7 @@ export default function DigitalCheckout() {
     if (!email) return navigate("/checkout/email");
 
     axios
-      .get(`http://127.0.0.1:8000/store/products/${id}/`)
+      .get(`https://recabitesnetwork.com/store/products/${id}/`)
       .then((res) => setProduct(res.data))
       .catch(() => navigate("/"));
   }, [id, token, email, navigate]);
