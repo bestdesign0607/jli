@@ -1215,7 +1215,7 @@ export default function DigitalPostPayment() {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/store/products/${id}/`);
+        const res = await axios.get(`https://recabitesnetwork.com/store/products/${id}/`);
         const data = res.data;
 
         setProduct(data);
