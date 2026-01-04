@@ -5113,7 +5113,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function AddProduct() {
-  const BASE_URL = "https://recabitesnetwork.com//store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
 
   const [form, setForm] = useState({
     product_type: "physical", // physical or digital
