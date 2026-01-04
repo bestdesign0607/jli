@@ -497,7 +497,7 @@ export default function Orders() {
     try {
       const orderType = order.is_digital ? "digital" : "physical"; // Assuming API returns is_digital flag
       await axios.post(
-        `http://127.0.0.1:8000/store/orders/update-status/${orderType}/${order.id}/`,
+        `https://recabitesnetwork.com/store/orders/update-status/${orderType}/${order.id}/`,
         { status: newStatus }
       );
       loadOrders();
