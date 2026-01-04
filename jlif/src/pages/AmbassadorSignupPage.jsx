@@ -474,7 +474,7 @@ export default function AmbassadorSignupPage() {
     try {
       const token = localStorage.getItem("access_token");
       const res = await axios.post(
-        "http://127.0.0.1:8000/network/ambassador/check-referrer/",
+        "https://recabitesnetwork.com/network/ambassador/check-referrer/",
         { referral_code: code },
         { headers: { Authorization: `Bearer ${token}` } }
       );
