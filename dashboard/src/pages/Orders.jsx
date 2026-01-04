@@ -486,7 +486,7 @@ export default function Orders() {
 
   const loadOrders = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/store/orders/all/");
+      const res = await axios.get("https://recabitesnetwork.com/store/orders/all/");
       setOrders(res.data.orders || []);
     } catch (err) {
       console.error("Failed to load orders:", err);
