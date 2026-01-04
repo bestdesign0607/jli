@@ -109,7 +109,7 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/store/products/");
+      const res = await axios.get("https://recabitesnetwork.com/store/products/");
       setProducts(res.data);
       setError(""); // clear any previous error
     } catch (err) {
