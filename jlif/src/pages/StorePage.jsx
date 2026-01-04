@@ -1896,7 +1896,7 @@ export const StorePage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [cartCount, setCartCount] = useState(0);
 
-  const BASE_URL = "http://127.0.0.1:8000/store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
 
   /** --------------------------
    * PRICE CLEANER / FORMATTER
