@@ -1451,7 +1451,7 @@ export default function DigitalOrdersAdmin() {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8000/store/admin/digital-orders/"
+          https://recabitesnetwork.com//store/admin/digital-orders/"
         );
         setOrders(res.data);
       } catch (err) {
