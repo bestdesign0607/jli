@@ -774,7 +774,7 @@ export default function AmbassadorDashboardPage() {
 
       try {
         const res = await axios.get(
-          "http://127.0.0.1:8000/network/ambassador/dashboard/",
+          "https://recabitesnetwork.com/network/ambassador/dashboard/",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (!res.data.is_ambassador) {
