@@ -3140,7 +3140,7 @@ export default function AccountPage() {
   const [reviewForm, setReviewForm] = useState({ product: "", text: "", rating: 5 });
   const [savingReview, setSavingReview] = useState(false);
 
-  const BASE_URL = "http://127.0.0.1:8000/store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
 
   const menuItems = [
     { id: "orders", label: "Your orders", icon: <FaFileInvoice /> },
