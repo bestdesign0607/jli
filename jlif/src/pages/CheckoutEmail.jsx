@@ -1275,7 +1275,7 @@ export default function CheckoutEmail() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const navigate = useNavigate();
-  const BASE_URL = "http://127.0.0.1:8000/store";
+  const BASE_URL = "https://recabitesnetwork.com/store";
   const validEmail = (str) => /\S+@\S+\.\S+/.test(str);
 
   // Fetch categories and all products
