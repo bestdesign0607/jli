@@ -638,7 +638,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 
-const BASE_URL = "http://127.0.0.1:8000/store/auth";
+const BASE_URL = "https://recabitesnetwork.com/store/auth";
 
 export const AuthPage = () => {
   const navigate = useNavigate();
