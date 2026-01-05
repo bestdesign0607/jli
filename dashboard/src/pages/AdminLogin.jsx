@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "https://recabitesnetwork.com/store/auth";
+const BASE_URL = "https://api.recabitesnetwork.com/store/auth";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
